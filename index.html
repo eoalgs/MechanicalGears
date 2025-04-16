@@ -51,12 +51,17 @@
         /* Flash Sale */
         .flash-sale {
             background-color: #ff4444;
-            padding: 15px;
+            padding: 2px 0;
             text-align: center;
-            font-size: 1.2em;
+            font-size: 1.1em;
+            font-weight: bold;
+            position: sticky; /* Làm cho dòng này dính */
+            top: 77px; /* Dính ngay bên dưới header */
+            z-index: 99; /* Đảm bảo nằm trên các thành phần khác */
+            color: #ffffff;
         }
-
-        .timer {
+        
+        .flash-sale .timer {
             font-weight: bold;
             color: #ffd700;
         }
@@ -157,7 +162,7 @@
             text-align: left;
             border-top: 1px solid #333;
             padding-top: 10px;
-            font-size: 1.2em;
+            font-size: 1.0em;
         }
 
         .show-specs {
@@ -300,8 +305,17 @@
             padding: 40px;
             text-align: center;
             margin-top: 50px;
+            color: #ffffff;
+            border-top: 1px solid #333;
         }
 
+        footer h3 {
+            font-size: 1.5em;
+            color: #00ff88;
+            margin-bottom: 20px;
+        }
+
+        /* Social Icons */
         .social-icons {
             margin-top: 20px;
         }
@@ -317,33 +331,101 @@
             color: #ffffff;
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            header {
-                flex-direction: column;
-                padding: 15px;
-            }
-            
-            nav {
-                margin-top: 15px;
-            }
-            
-            nav a {
-                margin: 0 10px;
-            }
-            
-            .products {
-                grid-template-columns: 1fr;
-                padding: 20px;
-            }
-            
-            .filters {
-                justify-content: flex-start;
-                overflow-x: auto;
-                padding: 15px;
-                white-space: nowrap;
-            }
+        /* Dropdown */
+        #support-dropdown {
+            width: 80%;
+            padding: 3px;
+            font-size: 1rem;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
         }
+
+        /* Nội dung dropdown */
+        .hidden {
+            display: none;
+        }
+
+        .dropdown-content {
+            padding: 10px;
+            margin-top: 10px;
+            background-color: #010101;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .dropdown-content p {
+            margin: 5px 0;
+        }
+
+        .dropdown-content a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .dropdown-content a:hover {
+            text-decoration: underline;
+        }
+
+        /* Biến CSS cho hai giao diện */
+        :root {
+            --background-color: #ffffff;
+            --text-color: #000000;
+            --accent-color: #00ff88;
+            --card-background: #f9f9f9;
+            --border-color: #cccccc;
+        }
+
+       
+        /* Thanh gạt (Toggle Switch) */
+        .theme-switch {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+            gap: 10px;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 25px;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--card-background);
+            transition: 0.4s;
+            border-radius: 25px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 4px;
+            bottom: 3.5px;
+            background-color: var(--text-color);
+            transition: 0.4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--accent-color);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
     </style>
 </head>
 <body>
@@ -357,7 +439,7 @@
     </header>
 
     <div class="flash-sale">
-        FLASH SALE: Giảm giá 50% còn <span class="timer">02:05:09</span>
+        FLASH SALE: Giảm 50% toàn sản phẩm còn <span class="timer">02:05:09</span>
     </div>
 
     <div class="filters">
@@ -373,8 +455,8 @@
             <img src="ảnh/OIP.jpeg" alt="5108B Plus Degenerate" class="product-image">
             <h3>5108B Plus Degenerate</h3>
             <div>
-                <span class="old-price">10.000.000₫</span>
-                <span class="price">4.999.999₫</span>
+                <span class="old-price">5.000.000₫</span>
+                <span class="price">2.499.999₫</span>
             </div>
             <button class="show-specs">
                 <i class="fas fa-info-circle"></i> Thông số kỹ thuật
@@ -413,7 +495,95 @@
             </button>
         </div>
 
-        <!-- Thêm các sản phẩm khác tại đây -->
+        <div class="product-card" data-category="office wireless">
+            <img src="ảnh/sp3.jpg" alt="Akko 5098B" class="product-image">
+            <h3>Akko 5098B</h3>
+            <div>
+                <span class="old-price">2.000.000₫</span>
+                <span class="price">999.999₫</span>
+            </div>
+            <button class="show-specs">
+                <i class="fas fa-info-circle"></i> Thông số kỹ thuật
+            </button>
+            <div class="product-specs">
+                <p><i class="fas fa-keyboard"></i> Loại switch: Giả cơ</p>
+                <p><i class="fas fa-plug"></i> Kết nối: USB có dây</p>
+                <p><i class="fas fa-palette"></i> LED: RGB 8 triệu màu</p>
+                <p><i class="fas fa-layer-group"></i> Layout: 108 keys</p>
+                <p><i class="fas fa-weight"></i> Vật liệu: Nhựa ABS</p>
+            </div>
+            <button class="add-to-cart">
+                <i class="fas fa-cart-plus"></i> Thêm vào giỏ
+            </button>
+        </div>
+
+        <div class="product-card" data-category="gaming wired">
+            <img src="ảnh/sp4.jpg" alt="𝐌𝐨𝐧𝐬𝐆𝐞𝐞𝐤 𝐌𝐆𝟏𝟎𝟖𝐁 Watermelon" class="product-image">
+            <h3>𝐌𝐨𝐧𝐬𝐆𝐞𝐞𝐤 𝐌𝐆𝟏𝟎𝟖𝐁 Watermelon</h3>
+            <div>
+                <span class="old-price">6.000.000₫</span>
+                <span class="price">2.999.999₫</span>
+            </div>
+            <button class="show-specs">
+                <i class="fas fa-info-circle"></i> Thông số kỹ thuật
+            </button>
+            <div class="product-specs">
+                <p><i class="fas fa-keyboard"></i> Loại switch: Switch V3 Piano Pro mang lại cảm giác gõ cực mượt mà</p>
+                <p><i class="fas fa-plug"></i> Kết nối: Kết nối Multi-mode linh hoạt</p>
+                <p><i class="fas fa-palette"></i> LED: RGB 16.8 triệu màu</p>
+                <p><i class="fas fa-battery"></i> Pin: Dung lượng pin trâu 3000mAh</p>
+                <p><i class="fas fa-layer-group"></i> Layout: Keycap MOG Profile mềm mại cực êm tay </p>
+                <p><i class="fas fa-weight"></i> Vật liệu: Titan nguyên khối</p>
+            </div>
+            <button class="add-to-cart">
+                <i class="fas fa-cart-plus"></i> Thêm vào giỏ
+            </button>
+        </div>
+
+        <div class="product-card" data-category="gaming wired">
+            <img src="ảnh/sp5.jpg" alt="AKKO 5098B Wasteland Survival" class="product-image">
+            <h3>AKKO 5098B Wasteland Survival</h3>
+            <div>
+                <span class="old-price">3.000.000₫</span>
+                <span class="price">1.499.999₫</span>
+            </div>
+            <button class="show-specs">
+                <i class="fas fa-info-circle"></i> Thông số kỹ thuật
+            </button>
+            <div class="product-specs">
+                <p><i class="fas fa-keyboard"></i> Loại switch: Giả cơ</p>
+                <p><i class="fas fa-plug"></i> Kết nối: USB có dây</p>
+                <p><i class="fas fa-palette"></i> LED: RGB 10 triệu màu</p>
+                <p><i class="fas fa-layer-group"></i> Layout: 108 keys</p>
+                <p><i class="fas fa-weight"></i> Vật liệu: Nhựa ABS</p>
+            </div>
+            <button class="add-to-cart">
+                <i class="fas fa-cart-plus"></i> Thêm vào giỏ
+            </button>
+        </div>
+
+        <div class="product-card" data-category="office wired">
+            <img src="ảnh/sp6.jpg" alt="Joy of Life" class="product-image">
+            <h3>Joy of Life</h3>
+            <div>
+                <span class="old-price">2.500.000₫</span>
+                <span class="price">1.299.999₫</span>
+            </div>
+            <button class="show-specs">
+                <i class="fas fa-info-circle"></i> Thông số kỹ thuật
+            </button>
+            <div class="product-specs">
+                <p><i class="fas fa-keyboard"></i> Loại switch: Switch nam châm siêu bền, tốc độ phản hồi nhanh</p>
+                <p><i class="fas fa-plug"></i> Kết nối: Kết nối đa chế độ thoải mái cho anh em sử dụng </p>
+                <p><i class="fas fa-palette"></i> LED: RGB rực rỡ, nâng tầm góc setup</p>
+                <p><i class="fas fa-layer-group"></i> Layout: Layout 75% gọn gàng, có núm xoay tiện lợi </p>
+                <p><i class="fas fa-weight"></i> Vật liệu: Nhôm khai thác trên trời năm 1972</p>
+            </div>
+            <button class="add-to-cart">
+                <i class="fas fa-cart-plus"></i> Thêm vào giỏ
+            </button>
+        </div>
+
     </div>
 
     <!-- Cart Modal -->
@@ -434,19 +604,59 @@
 
     <footer>
         <p>© 2025 Mechanical Gears</p>
+    
+        <div class="support-section">
+            <h3>Hỗ trợ khách hàng</h3>
+            <select id="support-dropdown">
+                <option value="" disabled selected>Chọn một mục hỗ trợ...</option>
+                <option value="faq">Câu hỏi thường gặp (FAQ)</option>
+                <option value="contact">Liên hệ hỗ trợ</option>
+                <option value="user-guide">Hướng dẫn sử dụng</option>
+                <option value="warranty">Chính sách bảo hành</option>
+            </select>
+        
+            <div id="support-content">
+                <div id="faq" class="dropdown-content hidden">
+                    <p><strong>1.</strong> Làm thế nào để đặt hàng?</p>
+                    <p><strong>2.</strong> Chính sách đổi trả hàng hóa?</p>
+                    <p><strong>3.</strong> Thời gian giao hàng là bao lâu?</p>
+                </div>
+        
+                <div id="contact" class="dropdown-content hidden">
+                    <p>Email: trumluadaovn15</p>
+                    <p>Số điện thoại: 1900 0091</p>
+                    <p>Hoặc gửi biểu mẫu liên hệ tại đây: <a href="#contact-form">Biểu mẫu liên hệ</a></p>
+                </div>
+        
+                <div id="user-guide" class="dropdown-content hidden">
+                    <p>Xem hướng dẫn sử dụng sản phẩm tại <a href="#">đây</a>.</p>
+                </div>
+        
+                <div id="warranty" class="dropdown-content hidden">
+                    <p>Sản phẩm được bảo hành 12 tháng kể từ ngày mua.</p>
+                </div>
+            </div>
+        </div>
+    
         <div class="social-icons">
             <a href="https://www.facebook.com/mechanicalgearss" target="_blank"><i class="fab fa-facebook"></i></a>
-            <a href="https://www.instagram.com/mech.anicalgears
-/?fbclid=IwY2xjawJXJ_NleHRuA2FlbQIxMAABHXajNOfhA7C7XQocCANgSGlj7-RI43pfhDmxlfHV3IHxyxBUXJacIywg8w_aem_Aj82k7gydSsoDwh7N6mI3Q#"
-><i class="fab fa-instagram"></i></a>
+            <a href="https://www.instagram.com/mech.anicalgears"><i class="fab fa-instagram"></i></a>
             <a href="#"><i class="fab fa-google"></i></a>
             <a href="#"><i class="fab fa-youtube"></i></a>
-            <a href="https://www.tiktok.com/
-@mechanicalgears?fbclid=IwY2xjawJXJ8lleHRuA2FlbQIxMAABHXajNOfhA7C7XQocCANgSGlj7-RI43pfhDmxlfHV3IHxyxBUXJacIywg8w_aem_Aj82k7gydSsoDwh7N6mI3Q"
-><i class="fab fa-tiktok"></i></a>
+            <a href="https://www.tiktok.com/@mechanicalgears"><i class="fab fa-tiktok"></i></a>
             <a href="#"><i class="fab fa-amazon"></i></a>
         </div><br>
         <a href="https://www.facebook.com/mechanicalgearss" class="social-link" target="_blank">Theo dõi chúng tôi trên Facebook</a>
+    
+        <div class="theme-switch">
+            <span>Dark Mode</span>
+            <label class="switch">
+                <input type="checkbox" id="theme-toggle">
+                <span class="slider round"></span>
+            </label>
+            <span>Light Mode</span>
+        </div>
+    
     </footer>
 
     <script>
@@ -648,6 +858,35 @@
         document.querySelectorAll('.product-specs').forEach(specs => {
             specs.style.display = 'none';
         });
+
+        const supportBtn = document.getElementById('support-btn');
+        const dropdownContent = document.querySelector('.dropdown-content');
+
+        supportBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
+        });
+
+        // Lấy dropdown và nội dung hỗ trợ
+        const dropdown = document.getElementById("support-dropdown");
+        const contents = document.querySelectorAll(".dropdown-content");
+
+        // Sự kiện khi chọn một mục trong dropdown
+        dropdown.addEventListener("change", (e) => {
+            const selectedValue = e.target.value;
+
+            // Ẩn tất cả nội dung
+            contents.forEach((content) => {
+                content.classList.add("hidden");
+            });
+
+            // Hiển thị nội dung được chọn
+            const selectedContent = document.getElementById(selectedValue);
+            if (selectedContent) {
+                selectedContent.classList.remove("hidden");
+            }
+        });
+
     </script>
 </body>
 </html>
